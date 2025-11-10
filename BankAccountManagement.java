@@ -11,8 +11,7 @@ class BankAccount {
     double dailyWithdrawalLimit = 20000;
     double dailyWithdrawnAmount = 0;
 
-    BankAccount(String name, String accNumber,
-            int pin, double initialBalance) {
+    BankAccount(String name, String accNumber, int pin, double initialBalance) {
         this.accountHolderName = name;
         this.accountNumber = accNumber;
         this.pin = pin;
@@ -30,15 +29,15 @@ class BankAccount {
     }
 
     void withdraw(double amount) {
-if (amount > 0 && amount <= balance) {
-if (dailyWithdrawnAmount + amount <= dailyWithdrawalLimit) {
+        if (amount > 0 && amount <= balance) {
+            if (dailyWithdrawnAmount + amount <= dailyWithdrawalLimit) {
                 balance -= amount;
                 dailyWithdrawnAmount += amount;
-        System.out.println("\nWithdrawal successful.");
-    printReceipt("Withdrawal", amount);
-} else {
-System.out.println("Daily withdrawal limit exceeded. You can withdraw up to ₹" + 
- (dailyWithdrawalLimit - dailyWithdrawnAmount));
+                System.out.println("\nWithdrawal successful.");
+                printReceipt("Withdrawal", amount);
+            } else {
+                System.out.println("Daily withdrawal limit exceeded. You can withdraw up to ₹"
+                        + (dailyWithdrawalLimit - dailyWithdrawnAmount));
             }
         } else {
             System.out.println("Invalid withdrawal amount or insufficient balance.");
@@ -62,8 +61,7 @@ System.out.println("Daily withdrawal limit exceeded. You can withdraw up to ₹"
         System.out.println("\n--- Transaction Receipt ---");
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        System.out.println("Date/Time   : " +
-                formatter.format(date));
+        System.out.println("Date/Time   : " + formatter.format(date));
         System.out.println("Transaction : " + transactionType);
         System.out.println("Amount      : ₹" + amount);
         System.out.println("Remaining Balance: ₹" + balance);
@@ -77,6 +75,7 @@ public class ATMSimulation {
 
     public static void main(String[] args) {
         int choice;
+
         do {
             System.out.println("\n==== ATM Home Screen ====");
             System.out.println("1. Create Account");
@@ -88,16 +87,16 @@ public class ATMSimulation {
 
             switch (choice) {
                 case 1:
-                    createAccount();
+                    createAccount(); // ✅ fixed method call
                     break;
                 case 2:
-                    insertCard();
+                    insertCard(); // ✅ fixed method call
                     break;
                 case 3:
-        System.out.println("\nThank you for using our ATM. Goodbye!");
+                    System.out.println("\nThank you for using our ATM. Goodbye!");
                     break;
                 default:
-        System.out.println("Invalid option. Try again.");
+                    System.out.println("Invalid option. Try again.");
             }
         } while (choice != 3);
 
@@ -111,19 +110,18 @@ public class ATMSimulation {
         String accNumber = sc.nextLine();
         System.out.print("Set 4-digit PIN: ");
         int pin = sc.nextInt();
-        System.out.print("Enter Initial Deposit: ₹");
+        System.out.print("Enter Initial Deposit: ");
         double initialBalance = sc.nextDouble();
         sc.nextLine(); // Consume newline
 
         BankAccount newAccount = new BankAccount(name, accNumber, pin, initialBalance);
         accounts.add(newAccount);
-        System.out.println("Account created successfully!");
+        System.out.println("✅ Account created successfully!");
     }
 
     static BankAccount findAccount(String accNumber, int pin) {
         for (BankAccount acc : accounts) {
-            if (acc.accountNumber.equals(accNumber)
-                    && acc.pin == pin) {
+            if (acc.accountNumber.equals(accNumber) && acc.pin == pin) {
                 return acc;
             }
         }
@@ -161,32 +159,32 @@ public class ATMSimulation {
 
             switch (choice) {
                 case 1:
-        System.out.print("\nEnter amount to withdraw: ₹");
+                    System.out.print("\nEnter amount to withdraw: ₹");
                     double withdrawAmount = sc.nextDouble();
-                    sc.nextLine(); // Consume newline
+                    sc.nextLine();
                     account.withdraw(withdrawAmount);
                     break;
                 case 2:
-        System.out.print("\nEnter amount to deposit: ₹");
+                    System.out.print("\nEnter amount to deposit: ₹");
                     double depositAmount = sc.nextDouble();
-                    sc.nextLine(); // Consume newline
+                    sc.nextLine();
                     account.deposit(depositAmount);
                     break;
                 case 3:
                     account.checkBalance();
                     break;
                 case 4:
-        System.out.print("\nEnter New 4-digit PIN: ");
+                    System.out.print("\nEnter New 4-digit PIN: ");
                     int newPin = sc.nextInt();
-                    sc.nextLine(); // Consume newline
+                    sc.nextLine();
                     account.changePin(newPin);
                     break;
                 case 5:
-        System.out.println("\nCard removed. Thank you for using our ATM!");
+                    System.out.println("\nCard removed. Thank you for using our ATM!");
                     account.resetDailyLimit();
                     break;
                 default:
-                 System.out.println("Invalid option. Please choose again.");
+                    System.out.println("Invalid option. Please choose again.");
             }
         } while (choice != 5);
     }
